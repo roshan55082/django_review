@@ -1,0 +1,144 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- <meta name="color-scheme" content="dark light"> -->
+
+        <title>Laptops</title>
+
+        <!-- card css -->
+        <link rel="stylesheet" href="{% static 'css/Card_css_1.css' %}">
+        <!-- jquery-3.5.1 -->
+        <script src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
+        <!-- font awesome -->
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+
+        <!-- w3 schools css -->
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+        <!-- bootstrap 4 -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+        <!-- jQuery -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+         
+        <style>
+            body{
+                background-color: #2a2f33;
+                color: white;
+                transition: 1s;
+            }
+            .crd{
+                background-color: transparent;
+                color: white;
+                transition: 1s;
+            }
+            .searchby{
+                background-color: #2a2f33;
+                color: white;
+                transition: 1s;
+            }
+        </style>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+        <script>
+            $(document).ready(function(){
+                $('#search').keyup(function (){
+                    $('.card').removeClass('d-none');
+                    var filter = $(this).val();
+                    $('.card-deck').find('.card .card-body h4:not(:contains("'+filter+'"))').parent().parent().addClass('d-none');
+                });
+            });
+        </script>
+
+
+
+    </head>
+
+
+    <body>
+
+        <form action="{% url 'cartpage' %}" method="POST">
+            {% csrf_token %}
+            <button class="btn btn-outline-success" title="Go To Cart">Go To Cart</button>
+        </form>
+
+        <form action="{% url 'signoutpage' %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="page_name" value="index">
+            <button class="btn btn-outline-danger" title="Sing Out">Sign Out</button>
+        </form>
+        Your Login ID : <b><i>{{request.session.email}}</i></b>
+
+        <div id="main">
+
+            <h1 class="grofers">
+                <span>L</span>
+                <span>A</span>
+                <span>P</span>
+                <span>T</span>
+                <span>O</span>
+                <span>P</span>
+                <span>S</span>
+            </h1>
+
+            <form class="form-inline">
+                <input class="form-control mr-sm-2 searchby" type="search" id="search" title="Search" placeholder="Search.." aria-label="Search"> 
+            </form>		
+
+                <br>
+                
+                <label> Latest Laptops </label>
+                <div class="layout-margin-8 mt-4">
+                    <div class="card-deck">
+                        {% for i in detail %}
+                        <div class="card card-shadow text-center crd">
+                            <div class="card-body crd">
+                                <h4 class="card-title crd">{{i.Product_name_details.Product_name}} {{i.Product_model}}</h4>
+                                <div class="dropdown-divider crd"></div>
+                                <p class="card-text crd"><small class="text-muted crd">Ram : {{i.Product_ram}} <em> gb </em> </small></p>
+                                {% if i.Product_image %}
+                                    <td align="center"><a href="{{MEDIA_URL}}{{i.Product_image.url}}" title="Image" target="_blank"><img src="{{MEDIA_URL}}{{i.Product_image.url}}" class="img_r" height="100px" width="100px"></a></td>
+                                {% else %}
+                                    <td align="center"> No Image </td>
+                                {% endif %}
+                                <p class="card-text crd"><b>Inr</b> : {{i.Product_price}}.00 ₹</p>
+                                <form action="{% url 'detailspage' %}" method="POST">
+                                    {% csrf_token %}
+                                        <input type="hidden" name="detai_id" value="{{i.pk}}">
+                                        <button class="btn btn-outline-primary card_btn" title="Product Detail"> Details </button>
+                                </form>
+                                <form action="{% url 'addcartpage' %}" method="POST">
+                                    {% csrf_token %}
+                                        <button class="btn btn-outline-primary card_btn" title="Add To Cart"><i class="fad fa-shopping-cart"></i> Add to Cart </button>
+                                </form>
+
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+        </div>
+
+
+    </body>
+
+    <script type="text/javascript">
+        $(document).ready(function()
+                {
+                    $("html").animate({scrollTop:0})
+                });
+    </script>
+
+</html>

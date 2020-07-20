@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Add Details</title>
+
+        <style>
+            textarea {
+                resize: none;
+                height: 100px;
+                width: 700px;
+            }
+        </style>
+
+    </head>
+    <body>
+        <form action="{% url 'editpage' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <input type="hidden" name="id_edit" value="{{detail.pk}}">
+            <label>Product Name</label>
+            <input required type="text" name="p_name" placeholder="{{detail.Product_name_details.Product_name}}" value="{{detail.Product_name_details.Product_name}}"><br>
+            <label>Product Price</label>
+            <input required type="number" name="p_price" placeholder="{{detail.Product_price}}" value="{{detail.Product_price}}"><br>
+            <label>Image</label>
+            <input type="file" name="p_img"><br>
+            <label>Product Model</label>
+            <input required type="text" name="p_model" placeholder="{{detail.Product_model}}" value="{{detail.Product_model}}"><br>
+            <label>Product Ram</label>
+            <input required type="number" name="p_ram" placeholder="{{detail.Product_ram}}" value="{{detail.Product_ram}}"><br>
+            <label>Product Details</label>
+            <!-- <input type="text" name="p_detail" placeholder="{{detail.Product_detail}}" value="{{detail.Product_detail}}"><br> -->
+            <textarea name="p_detail" placeholder="{{detail.Product_detail}}" value="{{detail.Product_detail}}" rows="4" cols="50"></textarea><br>
+            <button>Add Details</button>
+
+        </form>
+    </body>
+
+</html>

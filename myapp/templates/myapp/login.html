@@ -1,0 +1,65 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> Register Yourself </title>
+
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+    <div class="main">
+
+        <section class="signup">
+            <!-- <img src="images/signup-bg.jpg" alt=""> -->
+            <div class="container">
+                <div class="signup-content">
+                    <form action="{% url 'loginpage' %}" method="POST" id="signup-form" class="signup-form">
+                        {% csrf_token %}
+                        <h2 class="form-title">Login</h2>
+                        <div class="form-group">
+                            <label for="User type">Select User Type:</label>
+                                <select name="User type"  class="form-input" id="User type">
+                                    <option value="" disabled>Select User Type</option>
+                                    <option value="Admin">Admin</option>
+                                    <option value="Product Manager">Product Manager</option>
+                                </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-input" name="emailid" id="email" placeholder="Your Email"/>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-input" name="password" id="password" placeholder="Password"/>
+                            <span toggle="#password" class="zmdi zmdi-eye field-icon toggle-password"></span>
+                        </div>
+                        <div class="form-group">
+                            <button name="submit" id="submit" class="form-submit" >Login</button>
+                        </div>
+                    </form>
+                    <p class="loginhere">
+                        want to create an new account ? <a href="{% url 'registerpage' %}" class="loginhere-link">Signup Here</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- JS -->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    {% if msg %}
+    <script>
+        alert("{{msg}}")
+    </script>
+    {% endif %}
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</html>

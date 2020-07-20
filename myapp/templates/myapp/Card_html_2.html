@@ -1,0 +1,317 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- <meta name="color-scheme" content="dark light"> -->
+
+        <title>Grofers Item</title>
+
+        <!-- card css -->
+        <link rel="stylesheet" href="{% static 'css/Card_css_1.css' %}">
+        <!-- jquery-3.5.1 -->
+        <script src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
+        <!-- font awesome -->
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+
+        <!-- w3 schools css -->
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+        <!-- bootstrap 4 -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+        <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+        <!-- jQuery -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <!-- SweetAlert2 -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
+        
+
+
+        <style>
+            body{
+                background-color: #2a2f33;
+                color: white;
+                transition: 1s;
+            }
+            .crd{
+                background-color: transparent;
+                color: white;
+                transition: 1s;
+            }
+            textarea {
+                resize: none;
+                height: 100px;
+                width: 1200px;
+                border-radius: 10px;
+            }
+            .review_btn{
+                position: relative;
+                bottom: 80px;
+            }
+            #reply_box{
+                display: none;
+            }
+            #reply_lnk{
+                display: block;
+            }
+            #reviewH3 { border-bottom: rgba(255, 255, 255, 0.3);
+                border-bottom-style: solid;
+                border-bottom-width: thin;
+            }
+            .lnk{
+                color: #007BFF;
+                cursor: pointer;
+            }
+        </style>
+
+
+        <!-- <style>
+            .card-title {
+            text-align: center;
+            }
+
+            .card-shadow {
+            -webkit-box-shadow: 0px 0px 5px 5px rgba(232,232,232,1);
+            -moz-box-shadow: 0px 0px 5px 5px rgba(232,232,232,1);
+            box-shadow: 0px 0px 5px 5px rgba(232,232,232,1);
+            }
+
+            .card-deck {
+            display: flex;
+            justify-content: space-around;
+            flex-flow: row wrap;
+            align-items: stretch;
+            }
+
+            .card {
+            padding: 3% -9%;
+            border: none;
+            max-width: 200px;
+            flex-grow: 1;
+            transition: 0.5s;
+            }
+
+            .card:hover{
+            transform: scale(1.2);
+            }
+
+            .card:active{
+            transform: scale(1.1);
+            }
+
+            .card_btn{
+            position: relative;
+            }
+        </style> -->
+
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    </head>
+
+    <body>
+
+        Your Login ID : <b><i>{{request.session.email}}</i></b>
+
+        <h1 class="grofers">
+            <span>L</span>
+            <span>A</span>
+            <span>P</span>
+            <span>T</span>
+            <span>O</span>
+            <span>P</span>
+            <span>S</span>
+        </h1>
+
+        <a title="Back To The Main Page" href="{% url 'userpage' %}"><button class="btn btn-primary"> Back </button></a>
+
+        <!-- <br><br><br><br><br><br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+        <div>
+            <table >
+                <tr>
+                    {% if detail_obj.Product_image %}
+                        <td rowspan="5" align="center"><a href="{{MEDIA_URL}}{{detail_obj.Product_image.url}}" title="Image" target="_blank"><img src="{{MEDIA_URL}}{{detail_obj.Product_image.url}}" class="img_r" height="400px" width="500px"></a></td>
+                    {% else %}
+                        <td rowspan="5" align="center"> No Image </td>
+                    {% endif %}
+                    <td align="center"><h2>{{detail_obj.Product_name_details.Product_name}}</h2></td>
+                </tr>
+
+                <tr><td align="center">Product Model : {{detail_obj.Product_model}}</td></tr>
+                <tr><td align="center">Product Ram : {{detail_obj.Product_ram}} <em> gb </em></td></tr>
+                <tr><td align="center">Product Price : {{detail_obj.Product_price}}</td></tr>
+                <tr>
+                    {% if detail_obj.Product_detail %}
+                        <td><strong>Description : </strong><p id="prod_des" style="right: 100px;"></p>{{detail_obj.Product_detail}}</p></td>
+                    {% else %}
+                        <td align="center"> Oops! Product Details Are Not Vailable </td>
+                    {% endif %}
+                </tr>
+                
+            </table>
+
+            <!-- for reviews -->
+            {% if rev_obj %}
+            {% else %}
+                <form action="{% url 'reviewpage' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="detai_id" value="{{detail_obj.pk}}">
+                    <textarea name="u_review" placeholder="Reviews.." rows="10" cols="50"></textarea>
+                    <button title="submit reviews" class="review_btn">Submit</button>
+                </form>
+            {% endif %}
+
+            <div style="height:200px;width:1350px;border:1px solid #ccc;font:16px/26px Georgia, Garamond, Serif;overflow:auto;">
+                {% if all %}
+                    <h3 id="reviewH3"> Reviews </h3>
+                    {% for i in all %}
+                        {{i.User_details.Username}} <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{i.User_reviews}} <a id="reply_lnk {{i.pk}}" class="formButton{{i.pk}} replybtn" style="color: #007BFF; cursor: pointer;"><i class="fas fa-reply lnk"></i> reply </a><br>
+                        
+                        
+                            <form action="{% url 'sub_reviewpage' %}" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="detai_id" value="{{detail_obj.pk}}">
+                                <input type="hidden" name="rev_id" value="{{i.pk}}">
+                                <!-- <input type="hidden" name="rply_un" value="{{i.User_details.Username}}">
+                                <input type="hidden" name="rply_em" value="{{i.User_details.Emailid}}"> -->
+                                <textarea name="u_rply" placeholder="Reply.." id="reply_box" class="form1{{i.pk}}" cols="50" rows="10"></textarea>
+                                <button title="submit reviews" id="reply_box" class="review_btn r_btn{{i.pk}}">Submit</button>
+                            </form>
+                        
+
+                        {% if all_rply %}
+                            {% for rp in all_rply %}
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|__ {{rp.Rply_user_details.Username}} <br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{rp.User_replies}} <br>
+                            {% endfor %}
+                        {% endif %}
+
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <!-- {% comment %}
+            <form action="{% url 'reviewpage' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="detai_id" value="{{detail_obj.pk}}">
+                <textarea name="u_review" placeholder="Reviews" rows="4" cols="50"></textarea>
+                <button title="submit reviews">Submit</button>
+            </form>
+            {% endcomment %} -->
+
+        </div>
+
+
+        <!-- Related Products Start -->
+        <br><label> Related Products </label>
+            <div class="layout-margin-8 mt-4">
+                <div class="card-deck">
+                    <div class="card card-shadow text-center crd">
+                        <div class="card-body crd">
+                            <h4 class="card-title crd">Bhakarwadi</h4>
+                            <p class="card-text crd">Balaji</p>
+                            <div class="dropdown-divider crd"></div>
+                            <p class="card-text crd"><small class="text-muted crd"> Mouse </small></p>
+                            <button class="btn btn-outline-primary card_btn" title="Product Details"> Details </button>
+                            <button class="btn btn-outline-primary card_btn" title="Add To Cart"><i class="fad fa-shopping-cart"></i> Add to Cart </button>
+                        </div>
+                    </div>
+                    <div class="card card-shadow text-center crd">
+                        <div class="card-body crd">
+                            <h4 class="card-title crd">Aloo Bhjia</h4>
+                            <p class="card-text crd">Balaji</p>
+                            <div class="dropdown-divider crd"></div>
+                            <p class="card-text crd"><small class="text-muted crd"> Keyboard </small></p>
+                            <button class="btn btn-outline-primary card_btn" title="Product Details"> Details </button>
+                            <button class="btn btn-outline-primary card_btn" title="Add To Cart"><i class="fad fa-shopping-cart"></i> Add to Cart </button>
+                        </div>
+                    </div>
+                    <div class="card card-shadow text-center crd">
+                        <div class="card-body crd">
+                            <h4 class="card-title crd">Moong Dal</h4>
+                            <p class="card-text crd">Samrat</p>
+                            <div class="dropdown-divider crd"></div>
+                            <p class="card-text crd"><small class="text-muted crd"> Ram </small></p>
+                            <button class="btn btn-outline-primary card_btn" title="Product Details"> Details </button>
+                            <button class="btn btn-outline-primary card_btn" title="Add To Cart"><i class="fad fa-shopping-cart"></i> Add to Cart </button>
+                        </div>
+                    </div>
+                    <div class="card card-shadow text-center crd">
+                        <div class="card-body crd">
+                            <h4 class="card-title crd">Maggi</h4>
+                            <p class="card-text crd">Nestlé</p>
+                            <div class="dropdown-divider crd"></div>
+                            <p class="card-text crd"><small class="text-muted crd"> HDD </small></p>
+                            <button class="btn btn-outline-primary card_btn" title="Product Details"> Details </button>
+                            <button class="btn btn-outline-primary card_btn" title="Add To Cart"><i class="fad fa-shopping-cart"></i> Add to Cart </button>
+                        </div>
+                    </div>
+                    <div class="card card-shadow text-center crd">
+                        <div class="card-body crd">
+                            <h4 class="card-title crd">Puffcorns</h4>
+                            <p class="card-text crd">Samrat</p>
+                            <div class="dropdown-divider crd"></div>
+                            <p class="card-text crd"><small class="text-muted crd"> Cooling Pad </small></p>
+                            <button class="btn btn-outline-primary card_btn" title="Product Details"> Details </button>
+                            <button class="btn btn-outline-primary card_btn" title="Add To Cart"><i class="fad fa-shopping-cart"></i> Add to Cart </button>
+                        </div>
+                    </div>
+                    <div class="card card-shadow text-center crd">
+                        <div class="card-body crd">
+                            <h4 class="card-title crd">Chana Chor</h4>
+                            <p class="card-text crd">Samrat</p>
+                            <div class="dropdown-divider crd"></div>
+                            <p class="card-text crd"><small class="text-muted crd"> Graphic Card </small></p>
+                            <button class="btn btn-outline-primary card_btn" title="Product Details"> Details </button>
+                            <button class="btn btn-outline-primary card_btn" title="Add To Cart"><i class="fad fa-shopping-cart"></i> Add to Cart </button>
+                        </div>
+                    </div>
+                </div>
+            </div><br>
+        <!-- Related Products End -->
+
+
+    </body>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    {% for i in all %}
+    <script>
+        $(document).ready(function() {
+        $(".formButton{{i.pk}}").click(function() {
+            $(".form1{{i.pk}}").toggle();
+            $(".r_btn{{i.pk}}").toggle();
+        });
+        });
+    </script>
+    {% endfor %}
+    
+    <!-- Reply Id -->
+    <!-- <script>
+        $(document).ready(function(){
+            $('.replybtn').click(function(){
+                // alert("clicked!")
+                // alert($(this).attr("id"));
+                var user_id = $(this).attr("id");
+                window.alert(user_id);
+            });
+        });
+    </script> -->
+
+    <script type="text/javascript">
+        $(document).ready(function()
+                {
+                    $("html").animate({scrollTop:0})
+                });
+    </script>
+
+</html>

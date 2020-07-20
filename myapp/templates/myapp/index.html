@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Index Page</title>
+
+        <!-- bootstrap 4 -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+    </head>
+
+    <body>
+        <center>
+            <h1> Index Page </h1>
+        </center>
+        <form action="{% url 'addpage' %}" method="POST">
+            {% csrf_token %}
+            <button class="btn btn-outline-success" title="Add Details">Add</button>
+        </form>
+        <form action="{% url 'signoutpage' %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="page_name" value="index">
+            <button class="btn btn-outline-danger" title="SIgn Out">Sign Out</button>
+        </form>
+        <table class="table table-light table-hover" border="1">
+
+            <tr>
+                <th>Id</th>
+                <th>Product Id</th>
+                <th>Product Name</th>
+                <th>Product Price</th>
+                <th>Product Image</th>
+                <th>Product Model</th>
+                <th>Product Ram</th>
+            </tr>
+            
+            {% for i in detail %}
+            <tr>
+                
+                <td title="Id">{{i.pk}}</td>
+                <td title="Product Id">{{i.Product_name_details.Product_id}}</td>
+                <td title="Product Name">{{i.Product_name_details.Product_name}}</td>                
+                <td title="Product Price">{{i.Product_price}}</td>
+                <!-- <td title="">{{i.Product_image}}<img src="{{MEDIA_URL}}{{i.Product_image.url}}" class="img_r" height="100px" width="100px"></td> -->
+
+                {% if i.Product_image %}
+                <td title="Image" align="center"><a href="{{MEDIA_URL}}{{i.Product_image.url}}" target="_blank"><img src="{{MEDIA_URL}}{{i.Product_image.url}}" id="{{user.pk}}" class="img_r" height="100px" width="100px"></a></td>
+                {% else %}
+                <td title="Image" align="center"> No Image </td>
+                {% endif %}
+
+                <td title="Model Name">{{i.Product_model}}</td>
+                <td title="Ram">{{i.Product_ram}} <em> gb </em></td>
+
+                <form action="{% url 'editpage' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="id_edit" value="{{i.pk}}">
+                    <td><button class="btn btn-outline-primary" title="Edit Data">Edit</button></td>
+                </form>
+
+                <form action="{% url 'deletepage' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="id_del" value="{{i.pk}}">
+                    <td><button class="btn btn-outline-danger" title="Delete Data">Delete</button></td>
+                </form>
+                
+            </tr>
+            {% endfor %}
+
+        </table>
+    </body>
+</html>

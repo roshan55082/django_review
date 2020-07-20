@@ -1,0 +1,87 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> Register Yourself </title>
+
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+    <div class="main">
+
+        <section class="signup">
+            <!-- <img src="images/signup-bg.jpg" alt=""> -->
+            <div class="container">
+                <div class="signup-content">
+                    <form action="{% url 'registerpage' %}" method="POST" enctype="multipart/form-data" id="signup-form" class="signup-form">
+                        {% csrf_token %}
+                        <h2 class="form-title">Create account</h2>
+                        <div class="form-group">
+                            <label for="User type">Select User Type:</label>
+                                <select name="User type"  class="form-input" id="User type">
+                                    <option value="" disabled>Select User Type</option>
+                                    <option value="Admin">Admin</option>
+                                    <option value="Product Manager">Product Manager</option>
+                                </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-input" name="u_name" id="name" placeholder="Your Name"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="gender"> Select Your Gender: </label><br>
+                                <input type="radio" id="male" name="gender" value="Male" checked>
+                                <label for="male">Male</label>
+                                <input type="radio" id="female" name="gender" value="Female">
+                                <label for="female">Female</label>
+                                <input type="radio" id="others" name="gender" value="Others">
+                                <label for="others">Others</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" class="form-input" name="mob_no" minlength="10" maxlength="13" id="mob_no" placeholder="Your Mobile Number" />
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-input" name="emailid" id="email" placeholder="Your Email" required/>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-input" name="password" id="password" placeholder="Password"/>
+                            <span toggle="#password" class="zmdi zmdi-eye field-icon toggle-password"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-input" name="re_password" id="re_password" placeholder="Repeat your password"/>
+                        </div>
+                        <div class="form-group">
+                            <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" required/>
+                            <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" class="term-service">Terms of service</a></label>
+                        </div>
+                        <div class="form-group">
+                            <button name="submit" id="submit" class="form-submit" >Sign up</button>
+                        </div>
+                    </form>
+                    <p class="loginhere">
+                        Have already an account ? <a href="{% url 'loginpage' %}" class="loginhere-link">Login Here</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- JS -->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    {% if msg %}
+    <script>
+        alert("{{msg}}")
+    </script>
+    {% endif %}
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Add Details</title>
+
+        <style>
+            textarea {
+                resize: none;
+                height: 70px;
+                width: 300px;
+            }
+        </style>
+
+    </head>
+    <body>
+        <form action="{% url 'addpage' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <!-- <label>Product Id</label>
+            <input type="tel" name="p_id" placeholder="Product Id"><br> -->
+
+            <!-- <label for="p_id">Product Id</label>
+            <input list="p_ids" name="p_id" placeholder="Product Id" id="p_id">
+            <datalist id="p_ids">
+                {% for i in mstr %}
+                    <option value="{{i.Product_id}}">
+                {% endfor %}
+            </datalist><br> -->
+
+            <!-- <label>Product Name</label>
+            <input type="text" name="p_name" placeholder="Product Name"><br> -->
+
+            <label for="p_name">Product Name</label>
+            <input list="p_names" name="p_name" placeholder="Product Name" id="p_name">
+            <datalist id="p_names">
+                {% for i in mstr %}
+                    <option value="{{i.Product_name}}">
+                {% endfor %}
+            </datalist><br>
+
+            <label>Product Price</label>
+            <input required type="tel" name="p_price" placeholder="Product Price"><br>
+            <label>Image</label>
+            <input type="file" name="p_img"><br>
+            <label>Product Model</label>
+            <input required type="text" name="p_model" placeholder="Product Model"><br>
+            <label>Product Ram</label>
+            <input required type="number" name="p_ram" placeholder="Product Ram"><br>
+            <label>Product Details</label>
+            <!-- <input type="text" name="p_detail" placeholder="Product Details"><br> -->
+            <textarea name="p_detail" placeholder="Product Details" rows="4" cols="50"></textarea><br>
+            <button>Add Details</button>
+
+        </form>
+    </body>
+</html>
